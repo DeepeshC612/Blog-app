@@ -1,15 +1,13 @@
 const commentsModelSchema = require("../models/commentsModelSchema");
-const comm = require("../models/commentsModelSchema");
 
 const addComment = async (req, res) => {
   try {
-    const comment = await new commentsModelSchema(req.body);
-    comment.userId = req.params.uid;
-    comment.blogId = req.params.bid;
-    const data = await comment.populate({
+    let body = { ...req.body, userId: req.params.uid, blogId: req.params.bid };
+    const comment = await new commentsModelSchema(body);
+    await comment.populate({
       path: "userId",
-      select: "userName profilePic"
-    })
+      select: "userName profilePic",
+    });
     let comm = await comment.save();
     res.status(201).json({
       success: "success",
@@ -17,7 +15,7 @@ const addComment = async (req, res) => {
       addedComment: comm,
     });
   } catch (err) {
-    res.status(401).json({
+    res.status(400).json({
       success: "failure",
       message: "Error occure " + err,
     });
@@ -25,5 +23,5 @@ const addComment = async (req, res) => {
 };
 
 module.exports = {
-    addComment,
-}
+  addComment,
+};

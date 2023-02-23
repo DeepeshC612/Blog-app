@@ -29,3 +29,51 @@ describe("User Login API", () => {
     });
   });
 });
+
+describe("User Signup API", () => {
+  describe("POST/api/users", () => {
+    it("It should return User already exists with this email:", (done) => {
+        const data = {
+          userName: "Deepesh",
+          userEmail: "abc@gmail.com",
+          userPass: "abC@123",
+          phoneNum: "9131447591",
+          city: "indore",
+          state: "Madhya Pradesh",
+        };
+        chai
+         .request(server)
+         .post("/user/register")
+         .send(data)
+         .end((err, res)=>{
+          res.should.have.status(409);
+            res.should.be.a("object");
+            res.body.should.have.property("success").eq("failure");
+            res.body.should.have.property("message").eq("User already exists with this email");
+            done();
+         })
+      });
+
+    it("It should return register successfull:", (done) => {
+      const data = {
+        userName: "Deepesh",
+        userEmail: "abcdef@gmail.com",
+        userPass: "abC@123",
+        phoneNum: "9131447591",
+        city: "indore",
+        state: "Madhya Pradesh",
+      };
+      chai
+       .request(server)
+       .post("/user/register")
+       .send(data)
+       .end((err, res)=>{
+        res.should.have.status(201);
+          res.should.be.a("object");
+          res.body.should.have.property("success").eq("success");
+          res.body.should.have.property("message").eq("Registered successfully");
+          done();
+       })
+    });
+  });
+});
