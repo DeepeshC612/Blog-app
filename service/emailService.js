@@ -11,7 +11,7 @@ const sendMail = (email, token) => {
       user: sender,
       pass: password,
     },
-  });t
+  });
 
   var mailOptions = {
     from: sender,

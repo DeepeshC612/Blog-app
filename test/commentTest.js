@@ -3,7 +3,6 @@ const chai = require("chai");
 const chaiHttp = require("chai-http");
 const utils = require("../models/commentsModelSchema");
 const routes = require("../routes/commentRouters");
-const { addComment } = require("../controllers/commentControllers");
 
 chai.should();
 chai.use(chaiHttp);

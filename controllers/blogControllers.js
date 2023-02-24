@@ -1,4 +1,5 @@
 const blogSchema = require("../models/blogModelSchema");
+const commentSchema = require('../models/commentsModelSchema')
 
 const creatBlog = async (req, res) => {
   const regBlog = await new blogSchema(req.body);
@@ -37,9 +38,11 @@ const allBlog = async (req, res) => {
 
 const detailBlog = async (req, res) => {
   try {
-    const blogData = await blogSchema.find({ _id: req.params.id }).populate({
+    const blogData = await commentSchema.find({ blogId: req.params.id }).populate({
       path: "userId",
       select: "userName profilePic",
+    }).populate({
+      path: "blogId",
     });
     res.status(200).json({
       success: "success",
