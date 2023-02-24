@@ -40,4 +40,17 @@ module.exports = {
             next();
         }
     },
+  searchBlogValidation: async (req, res, next) => {
+      const seachBlogValues = await blogValidation.searchBlog.validate(req.body, {
+          abortEarly: false,
+        });
+        if (seachBlogValues.error) {
+            res.status(400).json({
+                success: 0,
+                error: seachBlogValues.error.details[0].message,
+            });
+        } else {
+            next();
+        }
+    },
 };

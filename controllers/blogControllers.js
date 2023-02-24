@@ -1,5 +1,5 @@
 const blogSchema = require("../models/blogModelSchema");
-const commentSchema = require('../models/commentsModelSchema')
+const commentSchema = require("../models/commentsModelSchema");
 
 const creatBlog = async (req, res) => {
   const regBlog = await new blogSchema(req.body);
@@ -38,12 +38,15 @@ const allBlog = async (req, res) => {
 
 const detailBlog = async (req, res) => {
   try {
-    const blogData = await commentSchema.find({ blogId: req.params.id }).populate({
-      path: "userId",
-      select: "userName profilePic",
-    }).populate({
-      path: "blogId",
-    });
+    const blogData = await commentSchema
+      .find({ blogId: req.params.id })
+      .populate({
+        path: "userId",
+        select: "userName profilePic",
+      })
+      .populate({
+        path: "blogId",
+      });
     res.status(200).json({
       success: "success",
       message: "Here is the blog",
@@ -129,6 +132,43 @@ const blogLike = async (req, res) => {
   }
 };
 
+const searchBlog = async (req, res) => {
+  const blogTitle = req.body.blogTitle;
+  try {
+    const searchQuery = { blogTitle: { $regex: blogTitle, $options: "i" } };
+    const searchData = await blogSchema.find(searchQuery);
+    res.status(200).json({
+      success: "success",
+      message: "Here are matching blogs",
+      searchData: searchData,
+    });
+  } catch (err) {
+    res.status(400).json({
+      success: "failure",
+      error: "Error occure " + err.message,
+    });
+  }
+};
+
+const userBlog = async (req, res) => {
+  try {
+    const myblog = await blogSchema.find({userId:req.params.id}).populate({
+      path: "userId",
+      select: "userName profilePic"
+    });
+    res.status(200).json({
+      success: "success",
+      message: "Here are matching blogs",
+      userBlog: myblog,
+    });
+  } catch (err) {
+    res.status(400).json({
+      success: "failure",
+      error: "Error occure " + err.message,
+    });
+  }
+};
+
 module.exports = {
   creatBlog,
   allBlog,
@@ -136,4 +176,6 @@ module.exports = {
   editBlog,
   deleteBlog,
   blogLike,
+  searchBlog,
+  userBlog
 };

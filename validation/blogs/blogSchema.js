@@ -44,6 +44,10 @@ const schema = {
         "string.max": "Title should max {#limit} characters",
       }),
   }).unknown(true),
+
+  searchBlog: joi.object({
+    blogTitle: joi.string().required(),
+  }).unknown(true),
 };
 
 module.exports = schema

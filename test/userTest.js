@@ -100,3 +100,26 @@ describe("User Email For Reset Password API", () => {
         });
     })
 })        
+
+describe("User Reset Password API", () => {
+    describe("POST/api/users", () => {
+      it("It should return reset password:", (done) => {
+          const data = {
+            userEmail: "cholkerdeepesh@gmail.com",
+          };
+          chai
+           .request(server)
+           .post("/user/email_reset_pass")
+           .send(data)
+           .end((err, res)=>{
+            res.should.have.status(200);
+              res.should.be.a("object");
+              res.body.should.have.property("success").eq("success");
+              res.body.should.have.property("message").eq("Email send successfully please check your inbox");
+              res.body.should.have.property("token");
+              res.body.should.have.property("userId");
+              done();
+           })
+        });
+    })
+})        

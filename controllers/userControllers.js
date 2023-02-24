@@ -2,6 +2,7 @@ require("dotenv").config();
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const mail = require("../service/emailService");
+const blogSchema = require('../models/blogModelSchema')
 const userSchema = require("../models/userModelSchema");
 
 const userSignup = async (req, res) => {
@@ -150,5 +151,5 @@ module.exports = {
   userSignup,
   userLogin,
   emailForResetPass,
-  userResetPass
+  userResetPass,
 };

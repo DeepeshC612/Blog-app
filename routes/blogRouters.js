@@ -17,6 +17,15 @@ Router.post(
     "/details/:id",  
     blog.detailBlog
 );
+Router.post(
+    "/myblog/:id",  
+    blog.userBlog
+);
+Router.get(
+    "/search",
+    validation.searchBlogValidation,
+    blog.searchBlog
+);
 Router.patch(
     "/edit/:id",
     validation.editBlogValidation,
