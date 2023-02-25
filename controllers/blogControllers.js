@@ -5,8 +5,8 @@ const creatBlog = async (req, res) => {
   const regBlog = await new blogSchema(req.body);
   regBlog.userId = req.params.id;
   try {
-    const filePath = `uploads${req.file.filename}`;
-    regBlog.blogImage = filePath;
+    // const filePath = `uploads${req.file.filename}`;
+    // regBlog.blogImage = filePath;
     await regBlog.save();
     res.status(201).json({
       success: "success",
@@ -25,7 +25,7 @@ const allBlog = async (req, res) => {
     const listBlog = await blogSchema.find();
     res.status(200).json({
       success: "success",
-      message: "Here are all the blogs",
+      message: "Here are list of all blogs",
       blogList: listBlog,
     });
   } catch {
@@ -39,7 +39,7 @@ const allBlog = async (req, res) => {
 const detailBlog = async (req, res) => {
   try {
     const blogData = await commentSchema
-      .find({ blogId: req.params.id })
+      .findOne({ blogId: req.params.id })
       .populate({
         path: "userId",
         select: "userName profilePic",
@@ -158,7 +158,7 @@ const userBlog = async (req, res) => {
     });
     res.status(200).json({
       success: "success",
-      message: "Here are matching blogs",
+      message: "Here are your blogs",
       userBlog: myblog,
     });
   } catch (err) {

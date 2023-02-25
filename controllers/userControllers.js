@@ -53,7 +53,7 @@ const userLogin = async (req, res) => {
             message: "Login success",
             userDetails: {
               userName: user.userName,
-              // profilePic: user.profilePic,
+              userId: user._id,
               userEmail: user.userEmail,
             },
             token: token,
@@ -61,13 +61,13 @@ const userLogin = async (req, res) => {
         } else {
           res.status(401).send({
             success: "failure",
-            error: "Email or Password is not valid",
+            message: "Email or Password is not valid",
           });
         }
       } else {
         res.status(401).send({
           success: "failure",
-          error: "You are not valid register user",
+          message: "You are not valid register user",
         });
       }
     }

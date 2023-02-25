@@ -4,7 +4,7 @@
   "description": "\"This is blogging app\"",
   "main": "index.js",
   "scripts": {
-    "test": "mocha test/blogTest.js",
+    "test": "mocha test/userTest.js",
     "start": "nodemon index.js"
   },
   "author": "",

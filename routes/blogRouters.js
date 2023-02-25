@@ -1,6 +1,7 @@
 const Router = require("express").Router()
 const blog = require("../controllers/blogControllers");
 const validation = require('../validation/blogs/blogValidation')
+const authorization = require('../middlewares/authMiddleware')
 const { upload } = require("../middlewares/multiStoreMiddleware");
 
 Router.post(
@@ -18,7 +19,8 @@ Router.post(
     blog.detailBlog
 );
 Router.post(
-    "/myblog/:id",  
+    "/:id",
+    authorization.checkUserAuth,
     blog.userBlog
 );
 Router.get(
@@ -28,6 +30,7 @@ Router.get(
 );
 Router.patch(
     "/edit/:id",
+    authorization.checkUserAuth,
     validation.editBlogValidation,
     blog.editBlog
 );
@@ -37,7 +40,8 @@ Router.patch(
     blog.blogLike
 );
 Router.delete(
-    "/delete/:id",  
+    "/delete/:id",
+    authorization.checkUserAuth,  
     blog.deleteBlog
 );
 
