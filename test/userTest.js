@@ -44,7 +44,9 @@ describe("User Login API", () => {
           res.should.have.status(401);
           res.should.be.a("object");
           res.body.should.have.property("success").eq("failure");
-          res.body.should.have.property("message").eq("Email or Password is not valid");
+          res.body.should.have
+            .property("message")
+            .eq("Email or Password is not valid");
           done();
         });
     });
@@ -63,14 +65,16 @@ describe("User Login API", () => {
           res.should.have.status(401);
           res.should.be.a("object");
           res.body.should.have.property("success").eq("failure");
-          res.body.should.have.property("message").eq("You are not valid register user");
+          res.body.should.have
+            .property("message")
+            .eq("You are not valid register user");
           done();
         });
     });
   });
 });
 
-// Conflict user email test case
+// Conflict userEmail test case
 describe("User Signup API", () => {
   describe("POST/api/users", () => {
     it("It should return User already exists with this email:", (done) => {
@@ -110,11 +114,13 @@ describe("User Signup API", () => {
       chai
         .request(server)
         .post("/user/register")
-        .set('Content-Type', 'application/x-www-form-urlencoded')
+        .set("Content-Type", "application/x-www-form-urlencoded")
         .field(data)
-        .attach('profilePic',
-        ('/Users/DELL/Downloads/WhatsApp Image 2023-02-16 at 10.59.57 PM (1).jpg'),
-        'WhatsApp Image 2023-02-16 at 10.59.57 PM (1).jpg')
+        .attach(
+          "profilePic",
+          "/Users/DELL/Downloads/WhatsApp Image 2023-02-16 at 10.59.57 PM (1).jpg",
+          "WhatsApp Image 2023-02-16 at 10.59.57 PM (1).jpg"
+        )
         .end((err, res) => {
           res.should.have.status(201);
           res.should.be.a("object");
@@ -148,6 +154,26 @@ describe("User Email For Reset Password API", () => {
             .eq("Email send successfully please check your inbox");
           res.body.should.have.property("token");
           res.body.should.have.property("userId");
+          done();
+        });
+    });
+
+    //Not register user for Emailing test case
+    it("It should return you are not registered user:", (done) => {
+      const data = {
+        userEmail: "cholkdeepesh@gmail.com",
+      };
+      chai
+        .request(server)
+        .post("/user/email_reset_pass")
+        .send(data)
+        .end((err, res) => {
+          res.should.have.status(550);
+          res.should.be.a("object");
+          res.body.should.have.property("success").eq("failure");
+          res.body.should.have
+            .property("message")
+            .eq("You are not registered user");
           done();
         });
     });

@@ -97,7 +97,7 @@ const emailForResetPass = async (req, res) => {
     } else {
       res.status(550).json({
         success: "failure",
-        error: "You are not registered user",
+        message: "You are not registered user",
       });
     }
   } catch (err) {
