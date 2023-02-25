@@ -17,10 +17,10 @@ const userSchema = mongoose.Schema({
     type: Number,
     required: true,
   },
-  // profilePic:{
-  //   type: String,
-  //   required: true
-  // },
+  profilePic:{
+    type: String,
+    required: true
+  },
   city: {
     type: String,
     required: true,

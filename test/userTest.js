@@ -3,6 +3,7 @@ const chai = require("chai");
 const chaiHttp = require("chai-http");
 const utils = require("../models/userModelSchema");
 const routes = require("../routes/userRouters");
+const { upload } = require("../Middlewares/multiStoreMiddleware");
 
 chai.should();
 chai.use(chaiHttp);
@@ -100,7 +101,7 @@ describe("User Signup API", () => {
     it("It should return register successfull:", (done) => {
       const data = {
         userName: "Deepesh",
-        userEmail: "abcdef@gmail.com",
+        userEmail: "abcdefg@gmail.com",
         userPass: "abC@123",
         phoneNum: "9131447591",
         city: "indore",
@@ -109,7 +110,11 @@ describe("User Signup API", () => {
       chai
         .request(server)
         .post("/user/register")
-        .send(data)
+        .set('Content-Type', 'application/x-www-form-urlencoded')
+        .field(data)
+        .attach('profilePic',
+        ('/Users/DELL/Downloads/WhatsApp Image 2023-02-16 at 10.59.57 PM (1).jpg'),
+        'WhatsApp Image 2023-02-16 at 10.59.57 PM (1).jpg')
         .end((err, res) => {
           res.should.have.status(201);
           res.should.be.a("object");
