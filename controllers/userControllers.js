@@ -18,7 +18,7 @@ const userSignup = async (req, res) => {
     try {
       const salt = await bcrypt.genSalt(10);
       regData.userPass = await bcrypt.hash(req.body.userPass, salt);
-      const filePath = `uploads${req.file.filename}`;
+      const filePath = `uploads/${req.file.filename}`;
       regData.profilePic = filePath;
       await regData.save();
       res.status(201).json({
