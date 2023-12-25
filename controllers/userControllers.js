@@ -43,7 +43,7 @@ const userLogin = async (req, res) => {
         const isMatch = await bcrypt.compare(userPass, user.userPass);
         if (user.userEmail === userEmail && isMatch) {
           const token = jwt.sign(
-            { userID: user._id },
+            { id : user._id },
             process.env.JWT_SECRET_KEY,
             { expiresIn: "5d" }
           );
