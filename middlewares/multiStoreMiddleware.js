@@ -7,7 +7,7 @@ const imageConfig = multer.diskStorage({
   },
   filename: (req, file, callback) => {
     var ext = file.originalname.substring(file.originalname.indexOf("."));
-    callback(null, `image_${Date.now()}.${file.originalname}`);
+    callback(null, `image_${Date.now()}.${file.originalname}.${ext}`);
   },
 });
 
